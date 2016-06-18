@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+    <head>
+    	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular-route.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+	
+		<script src="/responsive_ui_classes.js"></script>
+		<!--
+		<script >
+			$(document).ready(function(){
+				test();
+			})
+		</script>
+		-->
+    </head>
+
+    <body ng-controller="MainCtrl">
+    	<tabset id="TAB1" >
+    		<tab heading="tab1" id="tab1"></tab>
+    		<tab heading="tab2" id="tab2"></tab>
+    		<tab heading="tab3" id="tab3"></tab>
+    		<tab heading="tab4" id="tab4"></tab>
+    	</tabset>
+
+    	<div>
+    		<div class="container">
+			  <h2>Registration Form</h2> 
+			  <form role="form">
+			  <div class="form-group">
+			      <label for="pwd">User name</label>
+			      <input type="text" class="form-control" id="uname" placeholder="Enter Username">
+			    </div>
+			    <div class="form-group">
+			      <label for="email">Email:</label>
+			      <input type="email" class="form-control" id="email" placeholder="Enter email">
+			    </div>
+			    <div class="form-group">
+			      <label for="pwd">Password:</label>
+			      <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+			    </div>
+			    <!--
+			    <div class="form-group">
+			      <label for="pwd">Confirm Password:</label>
+			      <input type="password" class="form-control" id="cnfpwd" placeholder="Confirm password">
+			    </div>
+			    -->
+
+			    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="reg_btn">
+			  		Submit
+			    </button>
+
+			    <script>
+			    	
+						$('#reg_btn').click(function(){
+							if ($('#uname').val() != ""  &&  $('#email').val() != ""  &&  $('#pwd').val() != "") {
+							    
+							   	var data = {"uname":$('#uname').val(),"email":$('#email').val(), "password": $('#pwd').val()};
+					        	//var data={"uname":"fuck"};
+						       
+						        $.ajax({
+						                type: "POST",
+						                //url:"/Registration_process",
+						                url:"/Registration_process",
+						                data:data,
+
+						                success: function(response) {
+						                	
+						                	if(response.length==1){
+						        				$("#pwd").val('');
+						                		//$("#status").empty().text("username or password is incorrect!!!");
+						                		alert("registrtion not successs!!");
+						                	}
+						                	else{
+						                		$("#uname").val('');
+						                		$("#email").val('');
+							                	$("#pwd").val('');
+						        				
+
+						        				alert("registrtion successs");
+
+							        			
+						        			}
+						        				        			
+						            	},
+						            	
+						                error: function(textstatus, errorThrown) {
+						                    //alert('text status ' + textstatus + ', err ' + errorThrown);
+						                }
+						        });
+
+						        return false;
+							}
+							else{
+								alert("fill all");
+							}		
+						})
+					
+			    </script>
+
+			  </form>
+			</div>
+    	</div>
+    	<div style="height: 60px">
+    		
+    	</div>
+    	<div class="container">
+    		<h2>Login Form</h2> 
+	    	<div>
+	    		<form role="form">
+	  				<div class="form-group">
+				    	<label for="email">Email:</label>
+				      	<input type="email" class="form-control" id="Email" placeholder="Enter email">
+				    </div>
+				    <div class="form-group">
+				      	<label for="pwd">Password:</label>
+				     	<input type="password" class="form-control" id="pass" placeholder="Enter password">
+				    </div>
+
+				    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="log_btn">
+				    	Login
+				    </button>
+
+				    <script>
+			    	
+						$('#log_btn').click(function(){
+							if ($('#Email').val() != ""  &&  $('#pass').val() != "") {
+							    
+							   	var data = {"email":$('#Email').val(),"password": $('#pass').val()};
+					        	
+						        $.ajax({
+						                type: "POST",
+						                url:"/Login_process",
+						                data:data,
+
+						                success: function(response) {
+						                	
+						                	if(response.length==1){
+						        				$("#pass").val('');
+						                		//$("#status").empty().text("username or password is incorrect!!!");
+						                		alert("registrtion not successs!!");
+						                	}
+						                	else{
+						                		
+						                		$("#Email").val('');
+							                	$("#pass").val('');
+						        				
+						        				alert("registrtion successs");
+						        			}
+						        				        			
+						            	},
+						            	
+						                error: function(textstatus, errorThrown) {
+						                    //alert('text status ' + textstatus + ', err ' + errorThrown);
+						                }
+						        });
+
+						        return false;
+							}
+							else{
+								alert("fill all");
+							}		
+						})
+					
+			    </script>
+
+			  	</form>
+    		</div>
+    	</div>
+        
+
+		
+		
+    </body>
+</html>

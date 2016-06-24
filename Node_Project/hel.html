@@ -19,14 +19,33 @@
     </head>
 
     <body ng-controller="MainCtrl">
-    	<tabset id="TAB1" >
-    		<tab heading="tab1" id="tab1"></tab>
-    		<tab heading="tab2" id="tab2"></tab>
-    		<tab heading="tab3" id="tab3"></tab>
-    		<tab heading="tab4" id="tab4"></tab>
-    	</tabset>
+    	<div class="row">
+	    	<tabset id="tab">
+	    		<tab heading="tab1" ahref="#" id="tab1"></tab>
+	    		<tab heading="tab2" ahref="#" id="tab2"></tab>
+	    		<tab heading="tab3" ahref="#" id="tab3"></tab>
+	    		<tab heading="tab4" ahref="#" id="tab4"></tab>
+	    		<tab heading="tab5" ahref="#" id="tab5"></tab>
+	    	</tabset>
+    	</div>
 
-    	<div>
+    	
+    	<div class="row">
+    		<div class="col-md-2">
+    			<menu id="menu">
+					<menuitem heading="I am a cat" ahref="#" id="menu1"></menuitem>
+					<menuitem heading="I am a dog" ahref="#" id="menu2"></menuitem>
+					<menuitem heading="I am a bird" ahref="#" id="menu3"></menuitem>
+				</menu>
+    		</div>
+
+    		<div class="col-md-10">
+    			
+    		</div>
+    	</div>
+
+    	
+    	<div class="row">
     		<div class="container">
 			  <h2>Registration Form</h2> 
 			  <form role="form">

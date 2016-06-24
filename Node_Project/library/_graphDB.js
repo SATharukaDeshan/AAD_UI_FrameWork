@@ -45,8 +45,13 @@ Embeded_Neo4j_Database.prototype.getUser_used_uiComponent_Details = function(use
 	            if (err) {
 	              return console.log(err);
 	            }
+	            
+	            var user_used_ui_details={};
+	            user_used_ui_details.childs=[];
+
 	           var jsonob=result.data;
-	           console.log(JSON.stringify(jsonob[0]));
+	           user_used_ui_details.parent_ui_id
+	           console.log(JSON.stringify(jsonob));
 	           //console.log(JSON.stringify(jsonob[0][0].time)); // delivers an array of names of objects getting returned
 	      }
 	    );

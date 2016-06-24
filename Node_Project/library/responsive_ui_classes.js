@@ -1,11 +1,9 @@
 
-
 var app = angular.module('myapp', []);
 
 app.controller('MainCtrl', function($scope) {
  	
 });
-
 
 
 
@@ -15,20 +13,17 @@ app.directive('tab',function(){
       
       restrict: 'E',
       transclude:true,
-      template: '<div role="tabpanel" ng-transclude></div>',
+      template: "<div role='tabpanel' ng-transclude ></div>",
       require: '^tabset',
-      scope:{heading: '@'},
+      scope:{heading: '@',ahref: '@'},
       link:function(scope,elemt,attr,tabCtrl){
       	scope.active = false
       	tabCtrl.addTab(scope)
       	tabCtrl.addchild(attr.id);
-        /*
-        bind('click', function() {
-          
-          alert("frt");
-        });
-        */
-      	
+        /////////////////////////////////////
+        scope.clickedMe= function () {
+            alert(attr.id);
+        }
       }
   }
 });
@@ -55,40 +50,67 @@ app.directive('tabset', function() {
 		  }
 		}
 		self.addchild = function addchild(child) {
-		  self.JSONObj.child_ids.push(child);
-		  
+		  self.JSONObj.child_ids.push(child);	  
 		}
-    
     },
     link:function(scope,elm,attr,tabserCtrl){
     	tabserCtrl.JSONObj.parent_ID=attr.id;
+      alert(JSON.stringify(tabserCtrl.JSONObj));
       ui_data_Submission(tabserCtrl.JSONObj);
-      
-      
-      elm.bind('click', function() {
-        //var src = elem.find('tab').attr('src');
-        alert(attr.id);
-      });
       
     }
   }
 })
-/*
-app.run(function() {
-    alert("app run "+IDS.length);
+
+/////////////////////////////////   menu  directive  //////////////////////////////////////////////////////////////////
+
+app.directive('menuitem',function(){
+  return{
+      restrict: 'E',
+      transclude: true,    
+      scope:{heading: '@' , ahref: '@'},
+      template:"<a href='{{ahref}}' class='list-group-item' ng-click='clickedMe()'> {{heading}} </a>",
+      require: '^menu',
+      link:function(scope,elm,attr,menuitemCtrl){    
+        scope.clickedMe= function () {
+            alert(attr.id);
+        }
+        menuitemCtrl.addchild(attr.id);
+      }
+  }; 
 });
 
-app.config( function() {
-    alert("app config "+IDS.length);
+app.directive('menu', function() {
+    return {
+      restrict: 'E',
+      transclude: true,
+      scope:{heading: '@' },
+      template : "<ul  class='list-group' ng-transclude ></ul>",
+      bindToController: true,
+      controllerAs: 'menu', 
+
+      controller:function(){
+        var self = this;
+        
+        self.JSONObj = {};
+        self.JSONObj.child_ids = [];
+
+        self.addchild = function addchild(child) {
+          self.JSONObj.child_ids.push(child); 
+        }
+      },
+
+      link:function(scope,elm,attr,MenuCtrl){
+        MenuCtrl.JSONObj.parent_ID=attr.id;
+        //alert(JSON.stringify(MenuCtrl.JSONObj));
+        ui_data_Submission(MenuCtrl.JSONObj);
+      }
+    }
 });
 
-app.controller('MainCtrl', function($scope) {
-    alert("app controller "+IDS.length);
-});
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-*/
-
-//////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function ui_data_Submission(data){
     $.ajax({

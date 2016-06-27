@@ -1,10 +1,18 @@
+var variable1=['tea','cok'];
+
 
 var app = angular.module('myapp', []);
 
-app.controller('MainCtrl', function($scope) {
- 	
-});
+// app.controller('MainCtrl', function($scope) {
+//  	$scope.nam='fucker';
 
+// });
+app.controller('MainCtrl', ['$scope', '$window', function($scope, $window) {
+  $scope.variable1 = $window.variable1;
+  alert(variable1[0]);
+}]);
+
+app.value('user',{fname:'opp',lname:'ppp'});
 
 
 //////////////////////////////// Tab directive ///////////////////////////
@@ -15,7 +23,8 @@ app.directive('tab',function(){
       transclude:true,
       template: "<div role='tabpanel' ng-transclude ></div>",
       require: '^tabset',
-      scope:{heading: '@',ahref: '@'},
+      scope:{heading: '@',ahref: '@',id:'@'},
+
       link:function(scope,elemt,attr,tabCtrl){
       	scope.active = false
       	tabCtrl.addTab(scope)
@@ -55,8 +64,32 @@ app.directive('tabset', function() {
     },
     link:function(scope,elm,attr,tabserCtrl){
     	tabserCtrl.JSONObj.parent_ID=attr.id;
-      alert(JSON.stringify(tabserCtrl.JSONObj));
+      //alert(JSON.stringify(tabserCtrl.JSONObj));
       ui_data_Submission(tabserCtrl.JSONObj);
+      
+      //alert(JSON.stringify(tabserCtrl.tabs[0].scope));
+      var tab_ids=['tab2','tab1','tab4','tab3','tab5'];
+      
+      if(tab_ids.length!=0){
+        var temp=change_element_precedence(tab_ids,tabserCtrl.tabs);
+        tabserCtrl.tabs=[];
+        tabserCtrl.tabs=temp.concat();
+      }
+      alert(variable1[1]);
+
+      /*
+      var el=tab_ids.indexOf('tab12');
+
+      alert(tabserCtrl.tabs[0].id);
+      var t1=tabserCtrl.tabs[0]
+      var t2=tabserCtrl.tabs[1];
+      tabserCtrl.tabs[0]=t2;
+      tabserCtrl.tabs[1]=t1;
+      alert(tabserCtrl.tabs[0].id);
+      */
+
+      // var svg = angular.element('<div><p>heelllll</p></div>');
+      // elm.append(svg);
       
     }
   }
@@ -134,8 +167,22 @@ function ui_data_Submission(data){
 }
 
 
+function change_element_precedence(changed_id_list,standered_id_list){
+  if(changed_id_list.length!=0){
+    
+    for(i=0;i<changed_id_list.length;i++){
+      var inde=changed_id_list.indexOf(standered_id_list[i].id);
+      changed_id_list[inde]=standered_id_list[i];
 
+      
+    }
 
+    return changed_id_list;
+    
+    //alert(dynamic_list.length);
+  }
+  
+}
 
 
 
